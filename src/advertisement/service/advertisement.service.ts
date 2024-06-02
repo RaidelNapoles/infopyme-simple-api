@@ -34,7 +34,7 @@ export class AdvertisementService {
 
   async update(id: string, updateAdvertisementDto: UpdateAdvertisementDto) {
     const adsList = await this.jsonDataService.readJsonFile(this.dataFilePath);
-    let ads = adsList.find((ads) => ads.id === id);
+    const ads = adsList.find((ads) => ads.id === id);
     // ads = { ...ads, ...updateAdvertisementDto };
     Object.assign(ads, updateAdvertisementDto);
     await this.jsonDataService.writeJsonFile(this.dataFilePath, adsList);
@@ -47,5 +47,9 @@ export class AdvertisementService {
       this.dataFilePath,
       adsList.filter((ads) => ads.id !== id),
     );
+  }
+
+  async removeAll() {
+    await this.jsonDataService.writeJsonFile(this.dataFilePath, []);
   }
 }

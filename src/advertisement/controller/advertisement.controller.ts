@@ -38,8 +38,13 @@ export class AdvertisementController {
     return this.advertisementService.update(id, updateAdvertisementDto);
   }
 
-  @Delete(':id')
+  @Delete('remove/:id')
   remove(@Param('id') id: string) {
     return this.advertisementService.remove(id);
+  }
+
+  @Delete('removeAll')
+  removeAll() {
+    return this.advertisementService.removeAll();
   }
 }
