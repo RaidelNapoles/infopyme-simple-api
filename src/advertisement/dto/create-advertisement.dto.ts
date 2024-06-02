@@ -8,16 +8,16 @@ export class CreateAdvertisementDto {
   })
   id?: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: 'Leche evaporada' })
   tittle: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: 'Oferta de leche evaporada' })
   text: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: 'Infopyme Ventas' })
   businessName: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: '(+53) 53026190' })
   phone: string;
 
   @ApiProperty({ example: 'infopymecuba@gmail.com' })
@@ -34,7 +34,10 @@ export class CreateAdvertisementDto {
   @ApiPropertyOptional({ default: 30 })
   duration?: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    example:
+      'https://drive.google.com/file/d/1WbtuofHpneiAGVAWEBmz-cdJEbSM5RgR/view?usp=drive_link',
+  })
   imageUrl?: string;
 
   @ApiPropertyOptional({ default: true })
