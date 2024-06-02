@@ -1,6 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsEmail } from 'class-validator';
+import { IsDateString, IsEmail } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 
 export class CreateAdvertisementDto {
@@ -29,7 +28,7 @@ export class CreateAdvertisementDto {
     type: Date,
     default: new Date(),
   })
-  @Type(() => Date)
+  @IsDateString()
   startDate: Date;
 
   @ApiPropertyOptional({ default: 30 })
@@ -47,3 +46,5 @@ export class CreateAdvertisementDto {
   @ApiPropertyOptional({ default: true })
   isAlive?: boolean;
 }
+
+startDate is saveing string instead a date

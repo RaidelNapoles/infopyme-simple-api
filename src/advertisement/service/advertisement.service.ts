@@ -24,7 +24,37 @@ export class AdvertisementService {
   }
 
   async findAll() {
-    return await this.jsonDataService.readJsonFile(this.dataFilePath);
+    const ads: CreateAdvertisementDto[] =
+      await this.jsonDataService.readJsonFile(this.dataFilePath);
+    const newAds = ads.map((element) => {
+      const record = {
+        ...element,
+        startDate: new Date(element.startDate),
+      } as CreateAdvertisementDto;
+      const now = Date.now();
+      const start = record.startDate.getTime();
+      const elapsedTime = now - start;
+      record.timeFromStart = this.parseElapsedTime(elapsedTime);
+      return record;
+    });
+    return newAds;
+  }
+
+  parseElapsedTime(elapsedTime: number) {
+    const MICROSECONDS_IN_A_DAY = 86400000;
+    const MICROSECONDS_IN_A_HOUR = 3600000;
+    const MICROSECONDS_IN_A_MINUTE = 60000;
+    const MICROSECONDS_IN_A_SECOND = 1000;
+    const days = Math.floor(elapsedTime / MICROSECONDS_IN_A_DAY);
+    let rest = elapsedTime % MICROSECONDS_IN_A_DAY;
+    const hours = Math.floor(rest / MICROSECONDS_IN_A_HOUR);
+    rest %= MICROSECONDS_IN_A_HOUR;
+    const minutes = Math.floor(rest / MICROSECONDS_IN_A_MINUTE);
+    rest %= MICROSECONDS_IN_A_MINUTE;
+    const seconds = Math.floor(rest / MICROSECONDS_IN_A_SECOND);
+    rest %= MICROSECONDS_IN_A_SECOND;
+
+    return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
   }
 
   async findOne(id: string) {
