@@ -8,7 +8,7 @@ export class TasksService {
 
   constructor(private configService: ConfigService) {}
 
-  @Interval(600000)
+  @Interval(120000)
   async checkRenderConnection() {
     const current_env = this.configService.get<string>('CURRENT_ENV');
 
@@ -24,10 +24,10 @@ export class TasksService {
     }
   }
 
-  async onModuleInit() {
-    const current_env = this.configService.get<string>('CURRENT_ENV');
-    if (current_env === 'LOCAL') {
-      await this.checkRenderConnection();
-    }
-  }
+  // async onModuleInit() {
+  //   const current_env = this.configService.get<string>('CURRENT_ENV');
+  //   if (current_env === 'LOCAL') {
+  //     await this.checkRenderConnection();
+  //   }
+  // }
 }

@@ -10,7 +10,9 @@ import {
 import { AdvertisementService } from '../service/advertisement.service';
 import { CreateAdvertisementDto } from '../dto/create-advertisement.dto';
 import { UpdateAdvertisementDto } from '../dto/update-advertisement.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('advertisement')
 @Controller('advertisement')
 export class AdvertisementController {
   constructor(private readonly advertisementService: AdvertisementService) {}

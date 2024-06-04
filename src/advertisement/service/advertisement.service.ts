@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateAdvertisementDto } from '../dto/create-advertisement.dto';
 import { UpdateAdvertisementDto } from '../dto/update-advertisement.dto';
 import { join } from 'path';
-import { JsonDataService } from './json.data.service';
+import { JsonDataService } from '../../services/json.data.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
