@@ -19,8 +19,6 @@ export class TasksService {
       await fetch(url);
       const end = Date.now();
       this.logger.debug(`Execution time fetching: ${end - start} ms`);
-    } else {
-      this.logger.debug(`No need to check url`);
     }
   }
 }
