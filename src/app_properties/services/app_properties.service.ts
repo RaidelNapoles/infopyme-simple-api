@@ -32,8 +32,13 @@ export class AppPropertiesService {
     return `This action returns a #${id} appProperty`;
   }
 
-  update(id: number, updateAppPropertyDto: UpdateAppPropertyDto) {
-    return `This action updates a #${id} appProperty`;
+  async update(updateAppPropertyDto: UpdateAppPropertyDto) {
+    const appProperties = await this.jsonDataService.readJsonFile(
+      this.dataFilePath,
+    );
+    Object.assign(appProperties, updateAppPropertyDto);
+    await this.jsonDataService.writeJsonFile(this.dataFilePath, appProperties);
+    return appProperties;
   }
 
   remove(id: number) {

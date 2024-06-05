@@ -8,7 +8,7 @@ export class TasksService {
 
   constructor(private configService: ConfigService) {}
 
-  @Interval(120000)
+  @Interval(300000)
   async checkRenderConnection() {
     const current_env = this.configService.get<string>('CURRENT_ENV');
 
@@ -23,11 +23,4 @@ export class TasksService {
       this.logger.debug(`No need to check url`);
     }
   }
-
-  // async onModuleInit() {
-  //   const current_env = this.configService.get<string>('CURRENT_ENV');
-  //   if (current_env === 'LOCAL') {
-  //     await this.checkRenderConnection();
-  //   }
-  // }
 }

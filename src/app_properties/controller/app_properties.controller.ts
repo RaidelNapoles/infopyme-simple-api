@@ -32,12 +32,9 @@ export class AppPropertiesController {
     return this.appPropertiesService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateAppPropertyDto: UpdateAppPropertyDto,
-  ) {
-    return this.appPropertiesService.update(+id, updateAppPropertyDto);
+  @Patch()
+  update(@Body() updateAppPropertyDto: UpdateAppPropertyDto) {
+    return this.appPropertiesService.update(updateAppPropertyDto);
   }
 
   @Delete(':id')

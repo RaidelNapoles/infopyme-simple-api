@@ -1,50 +1,29 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsDateString, IsEmail } from 'class-validator';
-import { v4 as uuidv4 } from 'uuid';
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { Interval } from '@nestjs/schedule';
 
-export class CreateAdvertisementDto {
-  @ApiPropertyOptional({
-    default: uuidv4(),
-  })
-  id?: string;
+@Injectable()
+export class TasksService {
+  private readonly logger = new Logger(TasksService.name);
 
-  @ApiProperty({ default: 'Leche evaporada' })
-  tittle: string;
+  constructor(private configService: ConfigService) {}
 
-  @ApiProperty({ default: 'Oferta de leche evaporada' })
-  text: string;
+  @Interval(300000)
+  async checkRenderConnection() {
+    const current_env = this.configService.get<string>('CURRENT_ENV');
 
-  @ApiProperty({ default: 'Infopyme Ventas' })
-  businessName: string;
+    if (current_env && current_env === 'LOCAL') {
+      const url = this.configService.get<string>('URL_TO_TEST');
+      this.logger.debug(`Starting connection with ${url}....`);
+      const start = Date.now();
+      await fetch(url);
+      const end = Date.now();
+      this.logger.debug(`Execution time fetching: ${end - start} ms`);
+    } else {
+      this.logger.debug(`No need to check url`);
+    }
+  }
 
-  @ApiProperty({ default: '(+53) 53026190' })
-  phone: string;
-
-  @ApiProperty({ example: 'infopymecuba@gmail.com' })
-  @IsEmail()
-  email: string;
-
-  @ApiProperty({
-    type: Date,
-    default: new Date(),
-  })
-  @IsDateString()
-  startDate: Date;
-
-  @ApiPropertyOptional({ default: 30 })
-  duration?: number;
-
-  @ApiPropertyOptional({
-    example:
-      'https://drive.google.com/file/d/1WbtuofHpneiAGVAWEBmz-cdJEbSM5RgR/view?usp=drive_link',
-  })
-  imageUrl?: string;
-
-  @ApiPropertyOptional({ default: '' })
-  timeFromStart?: string;
-
-  @ApiPropertyOptional({ default: true })
-  isAlive?: boolean;
 }
 
-startDate is saveing string instead a date
+improve this code
